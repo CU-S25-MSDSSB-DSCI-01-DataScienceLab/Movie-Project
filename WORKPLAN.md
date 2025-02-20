@@ -21,7 +21,9 @@ Lu Zerong
 We plan to either scrape the data from the IMBD website or use already existing dataset in case we will not be able to obtain sufficient data volume for the analysis.
 
 https://datasets.imdbws.com/
+
 https://www.kaggle.com/datasets/ulrikthygepedersen/rotten-tomatoes-reviews
+
 https://www.reddit.com/r/datasets/comments/1ecj6m2/dataset_for_rotten_tomatoes_movies_1970_2024/
 
 ### Methods
