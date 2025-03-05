@@ -6,9 +6,7 @@ In this project we will predict movies revenue based on a combination of movie m
 
 ### Team members
 
-Matvei Trifanov
-Pasindu Perera
-Lu Zerong
+Matvei Trifanov, Pasindu Perera, Lu Zerong
 
 ### Main Goal or Research Question (not final)
 
