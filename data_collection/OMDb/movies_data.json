@@ -1,0 +1,402 @@
+[
+    {
+        "Title": "The Wolf of Wall Street",
+        "Year": "2013",
+        "Rated": "R",
+        "Released": "25 Dec 2013",
+        "Runtime": "180 min",
+        "Genre": "Biography, Comedy, Crime",
+        "Director": "Martin Scorsese",
+        "Writer": "Terence Winter, Jordan Belfort",
+        "Actors": "Leonardo DiCaprio, Jonah Hill, Margot Robbie",
+        "Plot": "Based on the true story of Jordan Belfort, from his rise to a wealthy stock-broker living the high life to his fall involving crime, corruption and the federal government.",
+        "Language": "English, French",
+        "Country": "United States",
+        "Awards": "Nominated for 5 Oscars. 37 wins & 179 nominations total",
+        "Poster": "https://m.media-amazon.com/images/M/MV5BMjIxMjgxNTk0MF5BMl5BanBnXkFtZTgwNjIyOTg2MDE@._V1_SX300.jpg",
+        "Ratings": [
+            {
+                "Source": "Internet Movie Database",
+                "Value": "8.2/10"
+            },
+            {
+                "Source": "Rotten Tomatoes",
+                "Value": "79%"
+            },
+            {
+                "Source": "Metacritic",
+                "Value": "75/100"
+            }
+        ],
+        "Metascore": "75",
+        "imdbRating": "8.2",
+        "imdbVotes": "1,646,556",
+        "imdbID": "tt0993846",
+        "Type": "movie",
+        "DVD": "N/A",
+        "BoxOffice": "$116,900,694",
+        "Production": "N/A",
+        "Website": "N/A",
+        "Response": "True"
+    },
+    {
+        "Title": "Dallas Buyers Club",
+        "Year": "2013",
+        "Rated": "R",
+        "Released": "22 Nov 2013",
+        "Runtime": "117 min",
+        "Genre": "Biography, Drama",
+        "Director": "Jean-Marc Vall\u00e9e",
+        "Writer": "Craig Borten, Melisa Wallack",
+        "Actors": "Matthew McConaughey, Jennifer Garner, Jared Leto",
+        "Plot": "In 1985 Dallas, electrician and hustler Ron Woodroof works around the system to help AIDS patients get the medication they need after he is diagnosed with the disease.",
+        "Language": "English, Japanese",
+        "Country": "United States",
+        "Awards": "Won 3 Oscars. 85 wins & 88 nominations total",
+        "Poster": "https://m.media-amazon.com/images/M/MV5BMTYwMTA4MzgyNF5BMl5BanBnXkFtZTgwMjEyMjE0MDE@._V1_SX300.jpg",
+        "Ratings": [
+            {
+                "Source": "Internet Movie Database",
+                "Value": "7.9/10"
+            },
+            {
+                "Source": "Rotten Tomatoes",
+                "Value": "92%"
+            },
+            {
+                "Source": "Metacritic",
+                "Value": "77/100"
+            }
+        ],
+        "Metascore": "77",
+        "imdbRating": "7.9",
+        "imdbVotes": "532,298",
+        "imdbID": "tt0790636",
+        "Type": "movie",
+        "DVD": "N/A",
+        "BoxOffice": "$27,298,285",
+        "Production": "N/A",
+        "Website": "N/A",
+        "Response": "True"
+    },
+    {
+        "Title": "The House That Jack Built",
+        "Year": "2018",
+        "Rated": "R",
+        "Released": "17 Oct 2018",
+        "Runtime": "152 min",
+        "Genre": "Crime, Drama, Horror",
+        "Director": "Lars von Trier",
+        "Writer": "Lars von Trier, Jenle Hallund",
+        "Actors": "Matt Dillon, Bruno Ganz, Uma Thurman",
+        "Plot": "In five episodes, failed architect and vicious sociopath Jack recounts his elaborately orchestrated murders -- each, as he views them, a towering work of art that defines his life's work as a serial killer in the Pacific Northwest.",
+        "Language": "English, German, Italian",
+        "Country": "Denmark, France, Sweden, Germany, Belgium",
+        "Awards": "11 wins & 17 nominations total",
+        "Poster": "https://m.media-amazon.com/images/M/MV5BY2Q3MDFiZGQtMjc4NS00MDJiLWFmYjgtNmI0MTQwMzUyOWNmXkEyXkFqcGc@._V1_SX300.jpg",
+        "Ratings": [
+            {
+                "Source": "Internet Movie Database",
+                "Value": "6.8/10"
+            },
+            {
+                "Source": "Rotten Tomatoes",
+                "Value": "59%"
+            },
+            {
+                "Source": "Metacritic",
+                "Value": "42/100"
+            }
+        ],
+        "Metascore": "42",
+        "imdbRating": "6.8",
+        "imdbVotes": "96,876",
+        "imdbID": "tt4003440",
+        "Type": "movie",
+        "DVD": "N/A",
+        "BoxOffice": "$258,106",
+        "Production": "N/A",
+        "Website": "N/A",
+        "Response": "True"
+    },
+    {
+        "Title": "The Ballad of Buster Scruggs",
+        "Year": "2018",
+        "Rated": "R",
+        "Released": "09 Nov 2018",
+        "Runtime": "133 min",
+        "Genre": "Comedy, Drama, Musical",
+        "Director": "Ethan Coen, Joel Coen",
+        "Writer": "Joel Coen, Ethan Coen, Jack London",
+        "Actors": "Tim Blake Nelson, Willie Watson, Clancy Brown",
+        "Plot": "Six tales of life and violence in the Old West, following a singing gunslinger, a bank robber, a traveling impresario, an elderly prospector, a wagon train, and a perverse pair of bounty hunters.",
+        "Language": "English, French",
+        "Country": "United States",
+        "Awards": "Nominated for 3 Oscars. 6 wins & 38 nominations total",
+        "Poster": "https://m.media-amazon.com/images/M/MV5BOTc0MzZjYTktYzBlZC00MmViLTgyNDYtNjljNTcxMzdjODRkXkEyXkFqcGc@._V1_SX300.jpg",
+        "Ratings": [
+            {
+                "Source": "Internet Movie Database",
+                "Value": "7.2/10"
+            },
+            {
+                "Source": "Rotten Tomatoes",
+                "Value": "89%"
+            },
+            {
+                "Source": "Metacritic",
+                "Value": "79/100"
+            }
+        ],
+        "Metascore": "79",
+        "imdbRating": "7.2",
+        "imdbVotes": "173,778",
+        "imdbID": "tt6412452",
+        "Type": "movie",
+        "DVD": "N/A",
+        "BoxOffice": "N/A",
+        "Production": "N/A",
+        "Website": "N/A",
+        "Response": "True"
+    },
+    {
+        "Title": "The Hateful Eight",
+        "Year": "2015",
+        "Rated": "R",
+        "Released": "30 Dec 2015",
+        "Runtime": "168 min",
+        "Genre": "Crime, Drama, Mystery",
+        "Director": "Quentin Tarantino",
+        "Writer": "Quentin Tarantino",
+        "Actors": "Samuel L. Jackson, Kurt Russell, Jennifer Jason Leigh",
+        "Plot": "In the dead of a Wyoming winter, a bounty hunter and his prisoner find shelter in a cabin currently inhabited by a collection of nefarious characters.",
+        "Language": "English, Spanish, French, Persian",
+        "Country": "United States",
+        "Awards": "Won 1 Oscar. 46 wins & 116 nominations total",
+        "Poster": "https://m.media-amazon.com/images/M/MV5BMjA1MTc1NTg5NV5BMl5BanBnXkFtZTgwOTM2MDEzNzE@._V1_SX300.jpg",
+        "Ratings": [
+            {
+                "Source": "Internet Movie Database",
+                "Value": "7.8/10"
+            },
+            {
+                "Source": "Rotten Tomatoes",
+                "Value": "74%"
+            },
+            {
+                "Source": "Metacritic",
+                "Value": "68/100"
+            }
+        ],
+        "Metascore": "68",
+        "imdbRating": "7.8",
+        "imdbVotes": "683,103",
+        "imdbID": "tt3460252",
+        "Type": "movie",
+        "DVD": "N/A",
+        "BoxOffice": "$54,117,416",
+        "Production": "N/A",
+        "Website": "N/A",
+        "Response": "True"
+    },
+    {
+        "Title": "The Big Short",
+        "Year": "2015",
+        "Rated": "R",
+        "Released": "23 Dec 2015",
+        "Runtime": "130 min",
+        "Genre": "Biography, Comedy, Drama",
+        "Director": "Adam McKay",
+        "Writer": "Charles Randolph, Adam McKay, Michael Lewis",
+        "Actors": "Christian Bale, Steve Carell, Ryan Gosling",
+        "Plot": "In 2006-2007 a group of investors bet against the United States mortgage market. In their research, they discover how flawed and corrupt the market is.",
+        "Language": "English",
+        "Country": "United States",
+        "Awards": "Won 1 Oscar. 37 wins & 81 nominations total",
+        "Poster": "https://m.media-amazon.com/images/M/MV5BZDZkNDQ3YjktYjBlZC00YTY1LTgxOGYtY2RhMWFhZmNkZGY3XkEyXkFqcGc@._V1_SX300.jpg",
+        "Ratings": [
+            {
+                "Source": "Internet Movie Database",
+                "Value": "7.8/10"
+            },
+            {
+                "Source": "Rotten Tomatoes",
+                "Value": "89%"
+            },
+            {
+                "Source": "Metacritic",
+                "Value": "81/100"
+            }
+        ],
+        "Metascore": "81",
+        "imdbRating": "7.8",
+        "imdbVotes": "502,511",
+        "imdbID": "tt1596363",
+        "Type": "movie",
+        "DVD": "N/A",
+        "BoxOffice": "$70,259,870",
+        "Production": "N/A",
+        "Website": "N/A",
+        "Response": "True"
+    },
+    {
+        "Title": "The Irishman",
+        "Year": "2019",
+        "Rated": "R",
+        "Released": "27 Nov 2019",
+        "Runtime": "209 min",
+        "Genre": "Biography, Crime, Drama",
+        "Director": "Martin Scorsese",
+        "Writer": "Steven Zaillian, Charles Brandt",
+        "Actors": "Robert De Niro, Al Pacino, Joe Pesci",
+        "Plot": "An illustration of Frank Sheeran's life, from W.W.II veteran to hit-man for the Bufalino crime family and his alleged assassination of his close friend Jimmy Hoffa.",
+        "Language": "English, Italian, Latin, Spanish, German",
+        "Country": "United States",
+        "Awards": "Nominated for 10 Oscars. 73 wins & 358 nominations total",
+        "Poster": "https://m.media-amazon.com/images/M/MV5BMTY2YThkNmQtOWJhYy00ZDc3LWEzOGEtMmQwNzM0YjFmZWIyXkEyXkFqcGc@._V1_SX300.jpg",
+        "Ratings": [
+            {
+                "Source": "Internet Movie Database",
+                "Value": "7.8/10"
+            },
+            {
+                "Source": "Rotten Tomatoes",
+                "Value": "95%"
+            },
+            {
+                "Source": "Metacritic",
+                "Value": "94/100"
+            }
+        ],
+        "Metascore": "94",
+        "imdbRating": "7.8",
+        "imdbVotes": "446,147",
+        "imdbID": "tt1302006",
+        "Type": "movie",
+        "DVD": "N/A",
+        "BoxOffice": "N/A",
+        "Production": "N/A",
+        "Website": "N/A",
+        "Response": "True"
+    },
+    {
+        "Title": "The Lighthouse",
+        "Year": "2019",
+        "Rated": "R",
+        "Released": "01 Nov 2019",
+        "Runtime": "109 min",
+        "Genre": "Drama, Fantasy, Horror",
+        "Director": "Robert Eggers",
+        "Writer": "Robert Eggers, Max Eggers",
+        "Actors": "Robert Pattinson, Willem Dafoe, Valeriia Karaman",
+        "Plot": "Two lighthouse keepers try to maintain their sanity while living on a remote and mysterious New England island in the 1890s.",
+        "Language": "English",
+        "Country": "Canada, United States",
+        "Awards": "Nominated for 1 Oscar. 34 wins & 143 nominations total",
+        "Poster": "https://m.media-amazon.com/images/M/MV5BMTI4MjFhMjAtNmQxYi00N2IxLWJjMGEtYWY1YmU3OTQ0Zjk3XkEyXkFqcGc@._V1_SX300.jpg",
+        "Ratings": [
+            {
+                "Source": "Internet Movie Database",
+                "Value": "7.4/10"
+            },
+            {
+                "Source": "Rotten Tomatoes",
+                "Value": "90%"
+            },
+            {
+                "Source": "Metacritic",
+                "Value": "83/100"
+            }
+        ],
+        "Metascore": "83",
+        "imdbRating": "7.4",
+        "imdbVotes": "273,540",
+        "imdbID": "tt7984734",
+        "Type": "movie",
+        "DVD": "N/A",
+        "BoxOffice": "$10,867,104",
+        "Production": "N/A",
+        "Website": "N/A",
+        "Response": "True"
+    },
+    {
+        "Title": "The Gentlemen",
+        "Year": "2019",
+        "Rated": "R",
+        "Released": "24 Jan 2020",
+        "Runtime": "113 min",
+        "Genre": "Action, Crime",
+        "Director": "Guy Ritchie",
+        "Writer": "Guy Ritchie, Ivan Atkinson, Marn Davies",
+        "Actors": "Matthew McConaughey, Charlie Hunnam, Michelle Dockery",
+        "Plot": "An American expat tries to sell off his highly profitable marijuana empire in London, triggering plots, schemes, bribery and blackmail in an attempt to steal his domain out from under him.",
+        "Language": "English, Russian, Spanish, Chinese",
+        "Country": "United States, United Kingdom",
+        "Awards": "1 win & 4 nominations total",
+        "Poster": "https://m.media-amazon.com/images/M/MV5BMjE2ZjQ4ZGMtZjFhMi00NmI5LTliNjEtODczMWMxNjliZjgxXkEyXkFqcGc@._V1_SX300.jpg",
+        "Ratings": [
+            {
+                "Source": "Internet Movie Database",
+                "Value": "7.8/10"
+            },
+            {
+                "Source": "Rotten Tomatoes",
+                "Value": "75%"
+            },
+            {
+                "Source": "Metacritic",
+                "Value": "51/100"
+            }
+        ],
+        "Metascore": "51",
+        "imdbRating": "7.8",
+        "imdbVotes": "426,458",
+        "imdbID": "tt8367814",
+        "Type": "movie",
+        "DVD": "N/A",
+        "BoxOffice": "$36,471,795",
+        "Production": "N/A",
+        "Website": "N/A",
+        "Response": "True"
+    },
+    {
+        "Title": "The Grand Budapest Hotel",
+        "Year": "2014",
+        "Rated": "R",
+        "Released": "28 Mar 2014",
+        "Runtime": "99 min",
+        "Genre": "Adventure, Comedy, Crime",
+        "Director": "Wes Anderson",
+        "Writer": "Stefan Zweig, Wes Anderson, Hugo Guinness",
+        "Actors": "Ralph Fiennes, F. Murray Abraham, Mathieu Amalric",
+        "Plot": "A writer encounters the owner of an aging high-class hotel, who tells him of his early years serving as a lobby boy in the hotel's glorious years under an exceptional concierge.",
+        "Language": "English, French, German",
+        "Country": "United States, Germany",
+        "Awards": "Won 4 Oscars. 135 wins & 227 nominations total",
+        "Poster": "https://m.media-amazon.com/images/M/MV5BMzM5NjUxOTEyMl5BMl5BanBnXkFtZTgwNjEyMDM0MDE@._V1_SX300.jpg",
+        "Ratings": [
+            {
+                "Source": "Internet Movie Database",
+                "Value": "8.1/10"
+            },
+            {
+                "Source": "Rotten Tomatoes",
+                "Value": "92%"
+            },
+            {
+                "Source": "Metacritic",
+                "Value": "88/100"
+            }
+        ],
+        "Metascore": "88",
+        "imdbRating": "8.1",
+        "imdbVotes": "915,710",
+        "imdbID": "tt2278388",
+        "Type": "movie",
+        "DVD": "N/A",
+        "BoxOffice": "$59,301,324",
+        "Production": "N/A",
+        "Website": "N/A",
+        "Response": "True"
+    }
+]
