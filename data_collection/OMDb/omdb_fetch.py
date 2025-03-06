@@ -6,7 +6,12 @@ API_KEY = "2942608b"
 
 movies = ["The Wolf of Wall Street", "Dallas Buyers Club", "The House That Jack Built", 
           "The Ballad of Buster Scruggs", "The Hateful Eight", "The Big Short", 
-          "The Irishman", "The Lighthouse", "The Gentlemen", "The Grand Budapest Hotel"]
+          "The Irishman", "The Lighthouse", "The Gentlemen", "The Grand Budapest Hotel", 
+          "The Revenant", "The Shape of Water", "The Martian", "The Social Network",
+          "The King's Speech", "The Theory of Everything", "The Imitation Game", 
+          "Django Unchained", "Inglourious Basterds", "Once Upon a Time in Hollywood",
+          "Ford v Ferrari", "The Two Popes", "Marriage Story", " 1917", "Jojo Rabbit",
+          "Joker", "Parasite", "Z", "Zombieland", "Zombieland: Double Tap"]
 
 collected_data = []
 
@@ -20,4 +25,4 @@ for movie in movies:
 with open("movies_data.json", "w") as file:
     json.dump(collected_data, file, indent=4) 
 
-print("Data collection for 10 movies has been completed. Check movies_data.json")
+print("Data collection for 30 movies has been completed. Check movies_data.json")
