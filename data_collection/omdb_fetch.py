@@ -11,12 +11,11 @@ API_KEY = "a088fd89"
 
 # dynamic paths to use on different PCs
 base_dir = os.path.dirname(os.path.abspath(__file__))
-project_root = os.path.abspath(os.path.join(base_dir, "..", ".."))
+project_root = os.path.abspath(os.path.join(base_dir, ".."))
 
 data_dir = os.path.join(project_root, "data_collection")
 movie_list_path = os.path.join(project_root, "data_collection", "movie_list.txt")
 omdb_data_path = os.path.join(data_dir, "omdb_data.json")
-omdb_failed_path = os.path.join(data_dir, "omdb_failed.txt")
 
 with open(movie_list_path, "r", encoding="utf-8") as f:
     movie_list = [line.strip() for line in f if line.strip()]
@@ -54,11 +53,6 @@ for idx, title in enumerate(movie_list, 1):
 os.makedirs(data_dir, exist_ok=True)
 with open(omdb_data_path, "w", encoding="utf-8") as f:
     json.dump(all_data, f, indent=2, ensure_ascii=False)
-
-# failed to fetch to txt
-with open(omdb_failed_path, "w", encoding="utf-8") as f:
-    for title in failed_movies:
-        f.write(f"{title}\n")
 
 print("\nFinished fetching OMDb data.")
 print(f"☑️ {len(all_data)} movies fetched")
