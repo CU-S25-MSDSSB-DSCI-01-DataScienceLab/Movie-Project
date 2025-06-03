@@ -6,6 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Matvei Trifanov">
+<meta name="author" content="Pasindu Perera">
+<meta name="author" content="Lu Zerong">
 
 <title>Movie Box Office Prediction</title>
 <style>
@@ -73,10 +76,69 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </head>
 
-<body class="fullcontent quarto-light">
+<body class="quarto-light">
 
-<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
-
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article toc-left">
+<div id="quarto-sidebar-toc-left" class="sidebar toc-left">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of Contents</h2>
+   
+  <ul>
+  <li><a href="#executive-summary" id="toc-executive-summary" class="nav-link active" data-scroll-target="#executive-summary"><span class="header-section-number">1</span> Executive Summary</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction"><span class="header-section-number">2</span> Introduction</a>
+  <ul class="collapse">
+  <li><a href="#project-motivation" id="toc-project-motivation" class="nav-link" data-scroll-target="#project-motivation"><span class="header-section-number">2.1</span> Project Motivation</a></li>
+  <li><a href="#research-questions" id="toc-research-questions" class="nav-link" data-scroll-target="#research-questions"><span class="header-section-number">2.2</span> Research Questions</a></li>
+  </ul></li>
+  <li><a href="#data-collection-wrangling" id="toc-data-collection-wrangling" class="nav-link" data-scroll-target="#data-collection-wrangling"><span class="header-section-number">3</span> Data Collection &amp; Wrangling</a>
+  <ul class="collapse">
+  <li><a href="#overview" id="toc-overview" class="nav-link" data-scroll-target="#overview"><span class="header-section-number">3.1</span> Overview</a></li>
+  <li><a href="#building-a-5000-film-master-list" id="toc-building-a-5000-film-master-list" class="nav-link" data-scroll-target="#building-a-5000-film-master-list"><span class="header-section-number">3.2</span> Building a 5000-film master list</a></li>
+  <li><a href="#metadata-enrichment-merging" id="toc-metadata-enrichment-merging" class="nav-link" data-scroll-target="#metadata-enrichment-merging"><span class="header-section-number">3.3</span> Metadata Enrichment &amp; Merging</a></li>
+  <li><a href="#final-dataset-and-quality-check" id="toc-final-dataset-and-quality-check" class="nav-link" data-scroll-target="#final-dataset-and-quality-check"><span class="header-section-number">3.4</span> Final Dataset and Quality Check</a></li>
+  </ul></li>
+  <li><a href="#exploratory-data-analysis" id="toc-exploratory-data-analysis" class="nav-link" data-scroll-target="#exploratory-data-analysis"><span class="header-section-number">4</span> Exploratory Data Analysis</a>
+  <ul class="collapse">
+  <li><a href="#missing-data-overview" id="toc-missing-data-overview" class="nav-link" data-scroll-target="#missing-data-overview"><span class="header-section-number">4.1</span> Missing-data Overview</a></li>
+  <li><a href="#imdb-rating-vs.-boxoffice-availability" id="toc-imdb-rating-vs.-boxoffice-availability" class="nav-link" data-scroll-target="#imdb-rating-vs.-boxoffice-availability"><span class="header-section-number">4.2</span> IMDb rating vs.&nbsp;BoxOffice availability</a></li>
+  <li><a href="#key-univariate-distributions" id="toc-key-univariate-distributions" class="nav-link" data-scroll-target="#key-univariate-distributions"><span class="header-section-number">4.3</span> Key univariate distributions</a>
+  <ul class="collapse">
+  <li><a href="#genre-frequency-top-10" id="toc-genre-frequency-top-10" class="nav-link" data-scroll-target="#genre-frequency-top-10"><span class="header-section-number">4.3.1</span> Genre frequency – top 10</a></li>
+  <li><a href="#language-frequency-top-10" id="toc-language-frequency-top-10" class="nav-link" data-scroll-target="#language-frequency-top-10"><span class="header-section-number">4.3.2</span> Language frequency – top 10</a></li>
+  </ul></li>
+  <li><a href="#revenue-distributions" id="toc-revenue-distributions" class="nav-link" data-scroll-target="#revenue-distributions"><span class="header-section-number">4.4</span> Revenue distributions</a></li>
+  <li><a href="#correlation-heat-map" id="toc-correlation-heat-map" class="nav-link" data-scroll-target="#correlation-heat-map"><span class="header-section-number">4.5</span> Correlation heat-map</a></li>
+  <li><a href="#genre-and-decade-effects-on-revenue" id="toc-genre-and-decade-effects-on-revenue" class="nav-link" data-scroll-target="#genre-and-decade-effects-on-revenue"><span class="header-section-number">4.6</span> Genre and decade effects on revenue</a></li>
+  </ul></li>
+  <li><a href="#modelling" id="toc-modelling" class="nav-link" data-scroll-target="#modelling"><span class="header-section-number">5</span> Modelling</a>
+  <ul class="collapse">
+  <li><a href="#what-factors-have-the-most-significant-impact-on-movie-revenue" id="toc-what-factors-have-the-most-significant-impact-on-movie-revenue" class="nav-link" data-scroll-target="#what-factors-have-the-most-significant-impact-on-movie-revenue"><span class="header-section-number">5.1</span> What factors have the most significant impact on movie revenue?</a>
+  <ul class="collapse">
+  <li><a href="#modeling-objective-and-setup" id="toc-modeling-objective-and-setup" class="nav-link" data-scroll-target="#modeling-objective-and-setup"><span class="header-section-number">5.1.1</span> Modeling Objective and Setup</a></li>
+  <li><a href="#methodology" id="toc-methodology" class="nav-link" data-scroll-target="#methodology"><span class="header-section-number">5.1.2</span> Methodology</a></li>
+  <li><a href="#model-performance-and-coefficients" id="toc-model-performance-and-coefficients" class="nav-link" data-scroll-target="#model-performance-and-coefficients"><span class="header-section-number">5.1.3</span> Model Performance and Coefficients</a></li>
+  <li><a href="#diagnostic-checks-and-limitations" id="toc-diagnostic-checks-and-limitations" class="nav-link" data-scroll-target="#diagnostic-checks-and-limitations"><span class="header-section-number">5.1.4</span> Diagnostic Checks and Limitations</a></li>
+  </ul></li>
+  <li><a href="#can-we-predict-movie-revenue-using-pre-release-features" id="toc-can-we-predict-movie-revenue-using-pre-release-features" class="nav-link" data-scroll-target="#can-we-predict-movie-revenue-using-pre-release-features"><span class="header-section-number">5.2</span> Can we predict movie revenue using pre-release features?</a>
+  <ul class="collapse">
+  <li><a href="#objective-and-setup" id="toc-objective-and-setup" class="nav-link" data-scroll-target="#objective-and-setup"><span class="header-section-number">5.2.1</span> Objective and Setup</a></li>
+  <li><a href="#modeling-and-evaluation" id="toc-modeling-and-evaluation" class="nav-link" data-scroll-target="#modeling-and-evaluation"><span class="header-section-number">5.2.2</span> Modeling and Evaluation</a></li>
+  <li><a href="#top-predictive-features" id="toc-top-predictive-features" class="nav-link" data-scroll-target="#top-predictive-features"><span class="header-section-number">5.2.3</span> Top Predictive Features</a></li>
+  </ul></li>
+  <li><a href="#how-do-audience-and-critic-reviews-influence-revenue" id="toc-how-do-audience-and-critic-reviews-influence-revenue" class="nav-link" data-scroll-target="#how-do-audience-and-critic-reviews-influence-revenue"><span class="header-section-number">5.3</span> How do audience and critic reviews influence revenue?</a>
+  <ul class="collapse">
+  <li><a href="#review-collection-and-sentiment-scoring" id="toc-review-collection-and-sentiment-scoring" class="nav-link" data-scroll-target="#review-collection-and-sentiment-scoring"><span class="header-section-number">5.3.1</span> Review Collection and Sentiment Scoring</a></li>
+  <li><a href="#sentiment-patterns-and-correlation-with-revenue" id="toc-sentiment-patterns-and-correlation-with-revenue" class="nav-link" data-scroll-target="#sentiment-patterns-and-correlation-with-revenue"><span class="header-section-number">5.3.2</span> Sentiment Patterns and Correlation with Revenue</a></li>
+  <li><a href="#sentiment-based-prediction-model" id="toc-sentiment-based-prediction-model" class="nav-link" data-scroll-target="#sentiment-based-prediction-model"><span class="header-section-number">5.3.3</span> Sentiment-Based Prediction Model</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#key-findings-conclusion" id="toc-key-findings-conclusion" class="nav-link" data-scroll-target="#key-findings-conclusion"><span class="header-section-number">6</span> Key Findings &amp; Conclusion</a></li>
+  <li><a href="#limitations-and-outlook" id="toc-limitations-and-outlook" class="nav-link" data-scroll-target="#limitations-and-outlook"><span class="header-section-number">7</span> Limitations and Outlook</a></li>
+  </ul>
+</nav>
+</div>
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+</div>
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
@@ -88,6 +150,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Authors</div>
+    <div class="quarto-title-meta-contents">
+             <p>Matvei Trifanov </p>
+             <p>Pasindu Perera </p>
+             <p>Lu Zerong </p>
+          </div>
+  </div>
     
   
     
@@ -98,17 +168,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="executure-summary" class="level1">
-<h1>Executure Summary</h1>
+<section id="executive-summary" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Executive Summary</h1>
+<p>In this project we investigate the key drivers of box office revenue using a structured data science approach. Drawing from a combined dataset of over 5000 movies, we integrate metadata (e.g budget, genre, ratings) and sentiment extracted from user reviews to analyze and predict financial performance.</p>
+<p>The study addresses three central questions:<br>
+<strong>(1)</strong> What factors most significantly impact movie revenue?<br>
+<strong>(2)</strong> Can revenue be predicted based solely on pre-release features?<br>
+<strong>(3)</strong> How do audience sentiments correlate with financial outcomes?</p>
+<p>Our analysis shows that budget and popularity indicators on IMDb (number of votes and ratings) are the most influential factors affecting income. The genre and duration of the show showed only a minor effect. Classification models using metadata functions had limited accuracy, which suggests that financial results are not easily grouped based on static movie characteristics.</p>
+<p>On the contrary, taking into account user sentiment revealed a moderate positive correlation with the box office figures. Films with more positive reviews tend to earn more, which highlights the importance of public opinion in predicting results. This was further confirmed by regression models that linked sentiment to income.</p>
 </section>
-<section id="introduction" class="level1">
-<h1>1. Introduction</h1>
-<section id="project-motivation" class="level2">
-<h2 class="anchored" data-anchor-id="project-motivation">1.1 Project Motivation</h2>
+<section id="introduction" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Introduction</h1>
+<section id="project-motivation" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="project-motivation"><span class="header-section-number">2.1</span> Project Motivation</h2>
 <p>Cinema is a major cultural and economic force. It reflects societal values, provides entertainment, and generates significant revenue. Understanding the factors that drive a film’s box office performance can help studios make informed decisions about production, marketing, and distribution. With the growing availability of structured metadata (e.g., cast, genre, release year) and user-generated feedback (e.g., IMDb ratings and votes), data-driven approaches can help uncover patterns that influence a movie’s financial outcome. In this project we plan to discover the elements that most significantly contribute to box office performance and explore whether revenue can be predicted using pre-release metadata and user reception indicators like reviews.</p>
 </section>
-<section id="research-questions" class="level2">
-<h2 class="anchored" data-anchor-id="research-questions">1.2 Research Questions</h2>
+<section id="research-questions" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="research-questions"><span class="header-section-number">2.2</span> Research Questions</h2>
 <p>We explore three interconnected questions:</p>
 <ol type="1">
 <li><p><em>What factors have the most significant impact on movie revenue?</em><br>
@@ -120,17 +197,17 @@ Public feedback often affects a film’s long-term profitability. Here we examin
 </ol>
 </section>
 </section>
-<section id="data-collection-wrangling" class="level1">
-<h1>2 Data Collection &amp; Wrangling</h1>
-<section id="overview" class="level2">
-<h2 class="anchored" data-anchor-id="overview">2.1 Overview</h2>
+<section id="data-collection-wrangling" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Data Collection &amp; Wrangling</h1>
+<section id="overview" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="overview"><span class="header-section-number">3.1</span> Overview</h2>
 <p>The primary database was built using the OMDb API, which provided metadata and user ratings for <strong>5000 movies</strong>. To ensure a diverse and representative sample, we used a stratified sample from the TMDb file <code>movies_metadata.csv</code>, stratifying it by release year to cover a wide time range. We then queried the OMDb API for each selected title, storing key metadata including show time, genre, rating, and box office.</p>
 <p>However, due to limitations of the OMDb API, in particular, the lack of budget information - we augmented our dataset with the original TMDb metadata. After filtering and standardizing the records, we matched and added a budget values for over <strong>3000 films</strong>. The final merged dataset became the foundation for our exploratory analysis and modeling, combining comprehensive metadata with key financial indicators.</p>
 <p>Code, notebooks, figures and scripts can be found in the <a href="https://github.com/CU-S25-MSDSSB-DSCI-01-DataScienceLab/Movie-Project?tab=readme-ov-file">GitHub repository</a></p>
 <p>Re-running the entire pipeline from scratch takes more than an hour (API calls + web-scraping), but a cleaned dataset (<code>data_collection/omdb_cleaned.csv</code>) is cached in the repository so the report can be reproduced in under 2 minutes.</p>
 </section>
-<section id="building-a-5000-film-master-list" class="level2">
-<h2 class="anchored" data-anchor-id="building-a-5000-film-master-list">2.2 Building a 5000-film master list</h2>
+<section id="building-a-5000-film-master-list" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="building-a-5000-film-master-list"><span class="header-section-number">3.2</span> Building a 5000-film master list</h2>
 <p>We relied on two main data sources: the OMDb API and the <code>movies_metadata.csv</code> dataframe from the <em>Kaggle</em> <a href="https://www.kaggle.com/datasets/rounakbanik/the-movies-dataset">The Movies Dataset</a>. While OMDb provided reliable information on variables such as screening time, genre and IMDb rating, it lacked consistent box office data. To address this gap, we cross-referenced and merged budget data from TMDb where it possible.</p>
 <p>Given the huge number of movies available in TMDb (over 45000), we used a stratified sampling approach to ensure diversity. Specifically, we grouped films by year of release and randomly selected a proportional number of titles from each decade.</p>
 <table class="caption-top table">
@@ -153,13 +230,13 @@ Public feedback often affects a film’s long-term profitability. Here we examin
 </table>
 <p>This approach preserved the historical variability in film characteristics and revenue patterns while reducing the dataset to an acceptable size of about 5000 records.</p>
 </section>
-<section id="metadata-enrichment-merging" class="level2">
-<h2 class="anchored" data-anchor-id="metadata-enrichment-merging">2.3 Metadata Enrichment &amp; Merging</h2>
+<section id="metadata-enrichment-merging" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="metadata-enrichment-merging"><span class="header-section-number">3.3</span> Metadata Enrichment &amp; Merging</h2>
 <p>To obtain a rich and robust set of metadata, each title in our list of 5000 movies was queried through the OMDb API. A total of 4768 API calls were successful, and after removing duplicates, we retained 4688 unique records.</p>
 <p>However, a key limitation was discovered: approximately 40% of the OMDb records lacked valid revenue information. To address this problem, we applied a two-step enrichment process. First, we used the links.csv file from the original TMDb dataset to map IMDb identifiers to their counterparts in TMDb. This allowed us to directly query the TMDb API to retrieve the missing revenue data. Thus, we successfully retrieved box office data for an additional <strong>1657 movies</strong>, reducing the number of missing cases to 262. This enrichment step significantly improved the completeness of our financial variables while maintaining transparency.</p>
 </section>
-<section id="final-dataset-and-quality-check" class="level2">
-<h2 class="anchored" data-anchor-id="final-dataset-and-quality-check">2.4 Final Dataset and Quality Check</h2>
+<section id="final-dataset-and-quality-check" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="final-dataset-and-quality-check"><span class="header-section-number">3.4</span> Final Dataset and Quality Check</h2>
 <p>After the metadata enrichment step, we performed a series of cleaning and validation steps to ensure the integrity of the analysis. Numeric fields such as <code>revenue</code>, <code>runtime</code>, and <code>budget</code> were normalized to the correct data types and distorted values were removed. All null values in the revenue field were treated as missing.</p>
 <p>The cleaned dataset includes <strong>4688 unique films</strong>, of which <strong>3021</strong> (about 64%) contain valid box office data. The remaining 1667 records were retained with missing revenue to allow for flexible treatment in modeling.</p>
 <p>Key characteristics of the final dataset include:<br>
@@ -168,38 +245,44 @@ Public feedback often affects a film’s long-term profitability. Here we examin
 - IMDb ratings and votes have near-complete coverage (≥ 95 %) and show usable variance (mean ≈ 6.3, st.dev ≈ 1.1).</p>
 </section>
 </section>
-<section id="exploratory-data-analysis" class="level1">
-<h1>3 Exploratory Data Analysis</h1>
-<section id="missing-data-overview" class="level2">
-<h2 class="anchored" data-anchor-id="missing-data-overview">3.1 Missing-data Overview</h2>
+<section id="exploratory-data-analysis" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Exploratory Data Analysis</h1>
+<section id="missing-data-overview" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="missing-data-overview"><span class="header-section-number">4.1</span> Missing-data Overview</h2>
 <p>To assess the completeness of the data, we visualized the pattern of missing values across all attributes (Figure 1). The vast majority of variables show a high level of coverage. The main exception is the <code>BoxOffice</code> variable, which is missing from about a third of the entries. This is consistent with earlier observations made during data collection. The heatmap highlights that the omissions are concentrated rather than random.</p>
-<div id="f7c89841" class="cell" data-execution_count="33">
+<div id="76c3d156" class="cell" data-execution_count="2">
+<details class="code-fold">
+<summary>Show code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">9</span>,<span class="dv">5</span>))</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>sns.heatmap(df.isna().T, cbar<span class="op">=</span><span class="va">False</span>, cmap<span class="op">=</span><span class="st">"Reds"</span>)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Film index"</span>)<span class="op">;</span> plt.ylabel(<span class="st">"Feature"</span>)</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="main-report_files/figure-html/cell-3-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="main-report_files/figure-html/cell-3-output-1.png" width="853" height="469" class="figure-img"></p>
 <figcaption>Figure 1 · Missing-value heat-map (darker = missing).</figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="imdb-rating-vs.-boxoffice-availability" class="level2">
-<h2 class="anchored" data-anchor-id="imdb-rating-vs.-boxoffice-availability">3.2 IMDb rating vs.&nbsp;BoxOffice availability</h2>
+<section id="imdb-rating-vs.-boxoffice-availability" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="imdb-rating-vs.-boxoffice-availability"><span class="header-section-number">4.2</span> IMDb rating vs.&nbsp;BoxOffice availability</h2>
 <p>Next, we investigated whether movies with missing revenue data differ from movies with specified values. Figure 2 compares IMDb ratings between the two groups.</p>
-<div id="d31e96f7" class="cell" data-execution_count="34">
+<div id="8135d49c" class="cell" data-execution_count="3">
+<details class="code-fold">
+<summary>Show code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"boxoffice_missing"</span>] <span class="op">=</span> df[<span class="st">"BoxOffice"</span>].isna()</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>sns.boxplot(x<span class="op">=</span><span class="st">"boxoffice_missing"</span>, y<span class="op">=</span><span class="st">"imdbRating"</span>, data<span class="op">=</span>df)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"BoxOffice missing?"</span>)<span class="op">;</span> plt.ylabel(<span class="st">"IMDb rating"</span>)</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="main-report_files/figure-html/cell-4-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="main-report_files/figure-html/cell-4-output-1.png" width="661" height="468" class="figure-img"></p>
 <figcaption>Figure 2 · IMDb ratings are similar whether revenue is missing or not.</figcaption>
 </figure>
 </div>
@@ -207,12 +290,14 @@ Public feedback often affects a film’s long-term profitability. Here we examin
 </div>
 <p>This suggests that the presence or absence of BoxOffice data does not correlate with the perceived quality of a movie, reducing concerns about selection bias.</p>
 </section>
-<section id="key-univariate-distributions" class="level2">
-<h2 class="anchored" data-anchor-id="key-univariate-distributions">3.3 Key univariate distributions</h2>
-<section id="genre-frequency-top-10" class="level3">
-<h3 class="anchored" data-anchor-id="genre-frequency-top-10">3.3.1 Genre frequency – top 10</h3>
+<section id="key-univariate-distributions" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="key-univariate-distributions"><span class="header-section-number">4.3</span> Key univariate distributions</h2>
+<section id="genre-frequency-top-10" class="level3" data-number="4.3.1">
+<h3 data-number="4.3.1" class="anchored" data-anchor-id="genre-frequency-top-10"><span class="header-section-number">4.3.1</span> Genre frequency – top 10</h3>
 <p>To better understand the thematic distribution of our dataset, we examined the frequency of movie genres (Figure 3).</p>
-<div id="a588d595" class="cell" data-execution_count="35">
+<div id="fc45ddfe" class="cell" data-execution_count="4">
+<details class="code-fold">
+<summary>Show code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> collections <span class="im">import</span> Counter</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>genre_counts <span class="op">=</span> Counter(g <span class="cf">for</span> s <span class="kw">in</span> df[<span class="st">"Genre"</span>].dropna() <span class="cf">for</span> g <span class="kw">in</span> s.split(<span class="st">", "</span>))</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>top <span class="op">=</span> pd.DataFrame(genre_counts.most_common(<span class="dv">10</span>), columns<span class="op">=</span>[<span class="st">"Genre"</span>, <span class="st">"Count"</span>])</span>
@@ -225,10 +310,11 @@ Public feedback often affects a film’s long-term profitability. Here we examin
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Number of films"</span>)</span>
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="main-report_files/figure-html/cell-5-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="main-report_files/figure-html/cell-5-output-1.png" width="755" height="468" class="figure-img"></p>
 <figcaption>Figure 3 · Top-10 genres across 4 688 films.</figcaption>
 </figure>
 </div>
@@ -236,10 +322,12 @@ Public feedback often affects a film’s long-term profitability. Here we examin
 </div>
 <p>The most common categories are <strong>drama</strong>, <strong>comedy</strong>, and <strong>action</strong>, a trend that reflects industry production volumes. The diversity of genres ensures that our modeling will reflect a wide range of narrative and stylistic patterns, allowing us to gain a deeper understanding of how content type can influence box office receipts.</p>
 </section>
-<section id="language-frequency-top-10" class="level3">
-<h3 class="anchored" data-anchor-id="language-frequency-top-10">3.3.2 Language frequency – top 10</h3>
+<section id="language-frequency-top-10" class="level3" data-number="4.3.2">
+<h3 data-number="4.3.2" class="anchored" data-anchor-id="language-frequency-top-10"><span class="header-section-number">4.3.2</span> Language frequency – top 10</h3>
 <p>As far as languages are concerned, the picture is very clear. English has a larger share than all other languages combined.</p>
-<div id="0e085685" class="cell" data-execution_count="36">
+<div id="3e22a2f2" class="cell" data-execution_count="5">
+<details class="code-fold">
+<summary>Show code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"Main_Lang"</span>] <span class="op">=</span> df[<span class="st">"Language"</span>].dropna().<span class="bu">str</span>.split(<span class="st">","</span>).<span class="bu">str</span>[<span class="dv">0</span>]</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>top_lang <span class="op">=</span> df[<span class="st">"Main_Lang"</span>].value_counts().head(<span class="dv">10</span>)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>))</span>
@@ -251,10 +339,11 @@ Public feedback often affects a film’s long-term profitability. Here we examin
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Number of films"</span>)</span>
 <span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
 <span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="main-report_files/figure-html/cell-6-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="main-report_files/figure-html/cell-6-output-1.png" width="756" height="468" class="figure-img"></p>
 <figcaption>Figure 4 · Most common primary languages.</figcaption>
 </figure>
 </div>
@@ -262,10 +351,12 @@ Public feedback often affects a film’s long-term profitability. Here we examin
 </div>
 </section>
 </section>
-<section id="revenue-distributions" class="level2">
-<h2 class="anchored" data-anchor-id="revenue-distributions">3.4 Revenue distributions</h2>
+<section id="revenue-distributions" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="revenue-distributions"><span class="header-section-number">4.4</span> Revenue distributions</h2>
 <p>Given the wide variability in film profitability, we examined the distribution of reported box office revenue using a log-scaled histogram (Figure 5). Most films in the dataset earn under <strong>$10 million</strong>, with a long right tail reflecting the presence of highly successful blockbusters. The log transformation reveals the density structure more clearly and confirms the classic skewed nature of movie earnings, where a few titles dominate total revenue.</p>
-<div id="7a8d9a1e" class="cell" data-execution_count="37">
+<div id="283326e5" class="cell" data-execution_count="6">
+<details class="code-fold">
+<summary>Show code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>filtered_df <span class="op">=</span> df[df[<span class="st">"BoxOffice"</span>] <span class="op">&gt;</span> <span class="dv">100_000</span>]</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>))</span>
@@ -278,16 +369,24 @@ Public feedback often affects a film’s long-term profitability. Here we examin
 <span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
 <span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Figure 6 · ECDF of revenues (log ₁₀ scale)."</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>bo <span class="op">=</span> df.loc[mask, <span class="st">"BoxOffice"</span>].sort_values()</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>y  <span class="op">=</span> np.arange(<span class="dv">1</span>, <span class="bu">len</span>(bo)<span class="op">+</span><span class="dv">1</span>) <span class="op">/</span> <span class="bu">len</span>(bo)</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>plt.plot(bo, y, marker<span class="op">=</span><span class="st">"."</span>, linestyle<span class="op">=</span><span class="st">"none"</span>)</span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>plt.xscale(<span class="st">"log"</span>)<span class="op">;</span> plt.xlabel(<span class="st">"Revenue (USD)"</span>)</span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Cumulative proportion"</span>)</span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>mask <span class="op">=</span> df[<span class="st">"BoxOffice"</span>].gt(<span class="fl">1e5</span>)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>bo <span class="op">=</span> df.loc[mask, <span class="st">"BoxOffice"</span>].sort_values()</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>y  <span class="op">=</span> np.arange(<span class="dv">1</span>, <span class="bu">len</span>(bo)<span class="op">+</span><span class="dv">1</span>) <span class="op">/</span> <span class="bu">len</span>(bo)</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>))</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>plt.plot(bo, y, marker<span class="op">=</span><span class="st">"."</span>, linestyle<span class="op">=</span><span class="st">"none"</span>, color<span class="op">=</span><span class="st">"darkorange"</span>)</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>plt.xscale(<span class="st">"log"</span>)</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Revenue (USD, log scale)"</span>)</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Cumulative proportion"</span>)</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"ECDF of Box Office Revenue"</span>)</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, which<span class="op">=</span><span class="st">"both"</span>, linestyle<span class="op">=</span><span class="st">"--"</span>, linewidth<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="main-report_files/figure-html/cell-7-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="main-report_files/figure-html/cell-7-output-1.png" width="676" height="451" class="figure-img"></p>
 <figcaption>Figure 5 · Histogram of BoxOffice revenue (log ₁₀ scale, &gt;$100 k).</figcaption>
 </figure>
 </div>
@@ -295,65 +394,471 @@ Public feedback often affects a film’s long-term profitability. Here we examin
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="main-report_files/figure-html/cell-7-output-2.png" class="img-fluid figure-img"></p>
+<p><img src="main-report_files/figure-html/cell-7-output-2.png" width="757" height="467" class="figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>To better understand the concentration of revenues among high-performing films, we plotted the empirical cumulative distribution function curve in Figure 6. The curve shows that about <strong>80%</strong> of all box office receipts are accounted for by only <strong>20%</strong> of films, highlighting the extreme imbalance in commercial success.</p>
 </section>
-<section id="correlation-heat-map" class="level2">
-<h2 class="anchored" data-anchor-id="correlation-heat-map">3.5 Correlation heat-map</h2>
+<section id="correlation-heat-map" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="correlation-heat-map"><span class="header-section-number">4.5</span> Correlation heat-map</h2>
 <p>A correlation heatmap was used to quantify relationships between key numerical variables (Figure 7). <strong>Budget</strong> and <strong>IMDb votes</strong> elicit the strongest positive correlation with box office revenue, which suggesting that larger production investment and greater audience engagement are strong predictors of financial performance.</p>
 <p>IMDb rating, while positively correlated, shows a weaker association, indicating that popularity (vote count) may be more financially consequential than average rating alone. These insights guide feature selection for subsequent modeling.</p>
-<div id="bbc1b0f7" class="cell" data-execution_count="39">
+<div id="9e01a3ff" class="cell" data-execution_count="7">
+<details class="code-fold">
+<summary>Show code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>num_cols <span class="op">=</span> [<span class="st">"BoxOffice"</span>,<span class="st">"imdbVotes"</span>,<span class="st">"imdbRating"</span>,<span class="st">"Runtime_clean"</span>,<span class="st">"budget"</span>]</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>sns.heatmap(df[num_cols].corr(), annot<span class="op">=</span><span class="va">True</span>, fmt<span class="op">=</span><span class="st">".2f"</span>, cmap<span class="op">=</span><span class="st">"vlag"</span>, center<span class="op">=</span><span class="dv">0</span>)</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="main-report_files/figure-html/cell-8-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="main-report_files/figure-html/cell-8-output-1.png" width="629" height="470" class="figure-img"></p>
 <figcaption>Figure 7 · Correlation among numeric variables.</figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="genre-and-decade-effects-on-revenue" class="level2">
-<h2 class="anchored" data-anchor-id="genre-and-decade-effects-on-revenue">2.6 Genre and decade effects on revenue</h2>
+<section id="genre-and-decade-effects-on-revenue" class="level2" data-number="4.6">
+<h2 data-number="4.6" class="anchored" data-anchor-id="genre-and-decade-effects-on-revenue"><span class="header-section-number">4.6</span> Genre and decade effects on revenue</h2>
 <p>Next we examined how revenues vary across genres and historical periods. Figure 8 shows the average box office receipts for the ten most financially successful genres in the dataset. It is dominated by genres such as <strong>animation</strong>, <strong>adventure</strong>, and <strong>action</strong>, which are often associated with family blockbusters or movie franchises. This hints us on the fact that genre plays an important role in shaping a film’s commercial potential and also emphasizes the importance of considering content type in revenue forecasting models.</p>
-<div id="0798d7f7" class="cell">
+<div id="e2ff3ad3" class="cell" data-execution_count="8">
+<details class="code-fold">
+<summary>Show code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>exploded <span class="op">=</span> df.assign(Genre<span class="op">=</span>df[<span class="st">"Genre"</span>].<span class="bu">str</span>.split(<span class="st">", "</span>)).explode(<span class="st">"Genre"</span>)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>top10    <span class="op">=</span> exploded.groupby(<span class="st">"Genre"</span>)[<span class="st">"BoxOffice"</span>].mean().nlargest(<span class="dv">10</span>)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>sns.barplot(x<span class="op">=</span>top10.values, y<span class="op">=</span>top10.index, color<span class="op">=</span><span class="st">"steelblue"</span>)</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Mean revenue (USD)"</span>)<span class="op">;</span> plt.tight_layout()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="main-report_files/figure-html/cell-9-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="main-report_files/figure-html/cell-9-output-1.png" width="661" height="468" class="figure-img"></p>
 <figcaption>Figure 8 · Mean revenue by genre (top 10).</figcaption>
 </figure>
 </div>
 </div>
 </div>
 <p>Figure 9 shows the evolution of median revenues by decade, based on log transformed values to remove extreme skewness in revenues. The graph shows a gradual upward shift over time. Especially, starting in the <strong>1950s</strong>. This trend likely reflects both inflation and the increasing global reach of the movie market. However, the dispersion remains large in all periods, meaning that highs and lows coexist in each era.</p>
-<div id="4e68ee4e" class="cell" data-execution_count="41">
+<div id="c866480f" class="cell" data-execution_count="9">
+<details class="code-fold">
+<summary>Show code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"Decade"</span>] <span class="op">=</span> (df[<span class="st">"Year"</span>]<span class="op">//</span><span class="dv">10</span>)<span class="op">*</span><span class="dv">10</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>dec_med <span class="op">=</span> df.groupby(<span class="st">"Decade"</span>)[<span class="st">"BoxOffice"</span>].median().dropna()</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>sns.lineplot(x<span class="op">=</span>dec_med.index, y<span class="op">=</span>np.log1p(dec_med), marker<span class="op">=</span><span class="st">"o"</span>)</span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Decade"</span>)<span class="op">;</span> plt.ylabel(<span class="st">"Median log₁₀(BoxOffice)"</span>)</span>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="main-report_files/figure-html/cell-10-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="main-report_files/figure-html/cell-10-output-1.png" width="661" height="468" class="figure-img"></p>
 <figcaption>Figure 9 · Median revenue trend by decade.</figcaption>
 </figure>
 </div>
 </div>
 </div>
 </section>
+</section>
+<section id="modelling" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Modelling</h1>
+<section id="what-factors-have-the-most-significant-impact-on-movie-revenue" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="what-factors-have-the-most-significant-impact-on-movie-revenue"><span class="header-section-number">5.1</span> What factors have the most significant impact on movie revenue?</h2>
+<section id="modeling-objective-and-setup" class="level3" data-number="5.1.1">
+<h3 data-number="5.1.1" class="anchored" data-anchor-id="modeling-objective-and-setup"><span class="header-section-number">5.1.1</span> Modeling Objective and Setup</h3>
+<p>To answer the first research question, we constructed an interpretable linear regression model with log transformed cash collections as the response variable. This transformation accounts for the strong skewness of the income distribution and allows for proportional interpretation of the coefficients. Our goal was to understand the relative importance of key post-release characteristics such as budget, IMDb scores, genre, and decade in explaining box office variability.</p>
+</section>
+<section id="methodology" class="level3" data-number="5.1.2">
+<h3 data-number="5.1.2" class="anchored" data-anchor-id="methodology"><span class="header-section-number">5.1.2</span> Methodology</h3>
+<p>We used an OLS model with numerical (e.g budget, IMDb rating) and categorical (e.g, genre, decade) predictors. The categorical variables were coded one point at a time, and the budget characteristic was logarithm transformed to fit the response scale. The final dataset included <strong>~2800 movies</strong> with complete recordings.</p>
+<p>All model inputs and outputs were reproducible using the <code>LinearRegression</code> implementation from <code>scikit-learn</code>.</p>
+</section>
+<section id="model-performance-and-coefficients" class="level3" data-number="5.1.3">
+<h3 data-number="5.1.3" class="anchored" data-anchor-id="model-performance-and-coefficients"><span class="header-section-number">5.1.3</span> Model Performance and Coefficients</h3>
+<p>The linear regression model explained approximately <strong>61%</strong> of the variance in log-transformed box office (<strong>R² = 0.61</strong>), indicating a strong confident fit. Standardized coefficients showed that audience engagement, as measured by the logarithm of IMDb votes, was the strongest predictor (<strong>β = 1.81</strong>).</p>
+<p>The scale of production also mattered: logarithm-transformed budget showed a strong positive effect (<strong>β = 0.45</strong>), supporting the idea that greater investment correlates with greater returns - albeit with less intensity than viewership. Surprisingly, IMDb rating and year of release showed negative coefficients (<strong>β = -0.53</strong> and <strong>β = -0.62</strong>), suggesting that once engagement and budget are taken into account, higher rated or more recent films do not necessarily yield higher box office receipts.</p>
+<p>In addition to the numerical predictors, several genre characteristics were included. For example, the genre <em>“Animation, Adventure, Comedy”</em> had a significant positive contribution (<strong>β ≈ 0.24</strong>) compared to others, while genres such as drama and romance showed almost zero or negative effects. These results support the hypothesis that some content types systematically outperform others commercially.</p>
+<div id="779d7e0e" class="cell" data-execution_count="11">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> Image</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>Image(<span class="st">"figures/residuals-plot.png"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="137">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="main-report_files/figure-html/cell-12-output-1.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 10 · Residuals vs.&nbsp;fitted values.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Figure 10 shows the residuals versus fitted values. The scatter appears homoscedastic, with no clear curvature or trend, suggesting that the model captures linear patterns well across the revenue spectrum.</p>
+</section>
+<section id="diagnostic-checks-and-limitations" class="level3" data-number="5.1.4">
+<h3 data-number="5.1.4" class="anchored" data-anchor-id="diagnostic-checks-and-limitations"><span class="header-section-number">5.1.4</span> Diagnostic Checks and Limitations</h3>
+<p>Residuals diagnostics confirmed the correctness of the model. The plot of residuals versus fitted values showed no significant trends or curvature, indicating that the assumption of linearity was reasonably well met. The Q-Q plot showed that most of the residuals conformed to a normal distribution, although slight deviations in the tails were observed, likely reflecting a few movies with extreme scores.</p>
+<p>Multicollinearity was assessed using variance inflation factors (VIF), all of which remained below 2. This indicates low redundancy of the predictors and confirms the numerical stability of the coefficient estimates.</p>
+<p>However, the model is limited by the use of domestic revenue only, potential errors in IMDb user data, and the exclusion of marketing costs, release time and competition - all factors known to affect commercial results. Nevertheless, the model provides a sound basis for understanding the significance of key characteristics.</p>
+<div id="a7e3c6ea" class="cell" data-execution_count="12">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> Image</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>Image(<span class="st">"figures/qq-plot.png"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="138">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="main-report_files/figure-html/cell-13-output-1.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 11 · Q–Q plot showing near-normal error distribution.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Figure 11 presents a Q–Q plot of standardized residuals. Most points align along the 45-degree line, confirming approximate normality. Slight deviations in the tails indicate mild outliers, but overall the residual distribution supports the model’s assumptions.</p>
+<p>To assess multicollinearity, we computed the Variance Inflation Factors (VIFs) for all predictors. All values remain well below the commonly used <code>rule of thumb of 5</code>, with most under 2, indicating no problematic correlation between features.</p>
+<section id="table-1-variance-inflation-factors-vifs-for-the-linear-regression-model" class="level4" data-number="5.1.4.1">
+<h4 data-number="5.1.4.1" class="anchored" data-anchor-id="table-1-variance-inflation-factors-vifs-for-the-linear-regression-model"><span class="header-section-number">5.1.4.1</span> Table 1 · Variance Inflation Factors (VIFs) for the linear regression model</h4>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Feature</th>
+<th>VIF</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>log_imdbVotes</td>
+<td>2.017</td>
+</tr>
+<tr class="even">
+<td>imdbRating</td>
+<td>1.695</td>
+</tr>
+<tr class="odd">
+<td>Runtime</td>
+<td>1.328</td>
+</tr>
+<tr class="even">
+<td>Year</td>
+<td>1.123</td>
+</tr>
+<tr class="odd">
+<td>log_budget</td>
+<td>1.530</td>
+</tr>
+<tr class="even">
+<td>Comedy, Drama, Romance</td>
+<td>1.038</td>
+</tr>
+<tr class="odd">
+<td>Comedy</td>
+<td>1.026</td>
+</tr>
+<tr class="even">
+<td>Action, Crime, Drama</td>
+<td>1.015</td>
+</tr>
+<tr class="odd">
+<td>Drama</td>
+<td>1.047</td>
+</tr>
+<tr class="even">
+<td>Action, Adventure, Sci-Fi</td>
+<td>1.079</td>
+</tr>
+<tr class="odd">
+<td>Comedy, Drama</td>
+<td>1.033</td>
+</tr>
+<tr class="even">
+<td>Animation, Adventure, Comedy</td>
+<td>1.108</td>
+</tr>
+<tr class="odd">
+<td>Drama, Romance</td>
+<td>1.029</td>
+</tr>
+<tr class="even">
+<td>Comedy, Romance</td>
+<td>1.017</td>
+</tr>
+<tr class="odd">
+<td>Action, Adventure, Comedy</td>
+<td>1.025</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+<section id="can-we-predict-movie-revenue-using-pre-release-features" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="can-we-predict-movie-revenue-using-pre-release-features"><span class="header-section-number">5.2</span> Can we predict movie revenue using pre-release features?</h2>
+<section id="objective-and-setup" class="level3" data-number="5.2.1">
+<h3 data-number="5.2.1" class="anchored" data-anchor-id="objective-and-setup"><span class="header-section-number">5.2.1</span> Objective and Setup</h3>
+<p>This section examines whether box office revenue can be predicted using <strong>only features available before a movie’s release</strong>, such as genre, runtime, budget, country, language, and selected cast and director data. This simulates an industry scenario where investors or studios must estimate success early in production.</p>
+</section>
+<section id="modeling-and-evaluation" class="level3" data-number="5.2.2">
+<h3 data-number="5.2.2" class="anchored" data-anchor-id="modeling-and-evaluation"><span class="header-section-number">5.2.2</span> Modeling and Evaluation</h3>
+<p>We trained and evaluated three regression models — <strong>Linear Regressiom</strong>, <strong>Random Forest</strong>, and <strong>XGBoost</strong> — using a dataset of over 3000 movies. Predictors included cleaned and one-hot encoded categorical variables, and scaled numeric inputs such as <strong>budget</strong> and <strong>runtime</strong>. The dataset was split <code>80/20</code> for training and testing.</p>
+<p>Results are summarized in the following table:<br>
+#### Table 2 · Model performance on pre-release features</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Model</th>
+<th>MAE (↓)</th>
+<th>RMSE (↓)</th>
+<th>R² (↑)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Linear Regression</td>
+<td>$34.8M</td>
+<td>$59.3M</td>
+<td>0.5732</td>
+</tr>
+<tr class="even">
+<td>Random Forest</td>
+<td>$28.4M</td>
+<td>$57.6M</td>
+<td>0.5984</td>
+</tr>
+<tr class="odd">
+<td>XGBoost</td>
+<td>$28.4M</td>
+<td>$53.3M</td>
+<td>0.6555</td>
+</tr>
+</tbody>
+</table>
+<p>Among the models, <strong>XGBoost</strong> achieved the best performance, explaining approximately <strong>66%</strong> of the variance in revenue. This indicates strong predictive power, despite using only early-available features.</p>
+</section>
+<section id="top-predictive-features" class="level3" data-number="5.2.3">
+<h3 data-number="5.2.3" class="anchored" data-anchor-id="top-predictive-features"><span class="header-section-number">5.2.3</span> Top Predictive Features</h3>
+<p>To understand which factors influenced predictions the most, we examined <strong>XGBoost’s feature importances</strong>. The top 20 features are shown in the bar plot below:</p>
+<div id="965a3c4c" class="cell" data-execution_count="13">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> Image</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>Image(<span class="st">"figures/xgboost.png"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="139">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="main-report_files/figure-html/cell-14-output-1.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 12 · Top 20 most important pre-release features (XGBoost)</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Features such as <strong>Actor_Leonardo DiCaprio</strong>, <strong>budget</strong>, and <strong>Director_Gary Trousdale</strong> were among the most influential predictors. This aligns with expectations — highlighting the impact of star power, genre combinations, and production investment on box office returns.</p>
+</section>
+</section>
+<section id="how-do-audience-and-critic-reviews-influence-revenue" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="how-do-audience-and-critic-reviews-influence-revenue"><span class="header-section-number">5.3</span> How do audience and critic reviews influence revenue?</h2>
+<p>Building upon the insights gained from metadata-based modeling, we now turn to the second key dimension of our analysis: the relationship between <strong>audience sentiment</strong> and <strong>movie revenue</strong>. Using IMDb user reviews as our sentiment source and <code>VADER</code> for sentiment analysis, we evaluate how different types of sentiment—positive, negative, and neutral—correlate with box office performance. This section also introduces a basic regression model to assess the predictive potential of sentiment features, supported by visualizations that highlight patterns across films.</p>
+<section id="review-collection-and-sentiment-scoring" class="level3" data-number="5.3.1">
+<h3 data-number="5.3.1" class="anchored" data-anchor-id="review-collection-and-sentiment-scoring"><span class="header-section-number">5.3.1</span> Review Collection and Sentiment Scoring</h3>
+<p>To examine the influence of audience perception on movie revenue, we collected user reviews from IMDb using a custom Python scraper. Reviews were matched to each movie in our dataset based on title and year. For sentiment analysis, we employed the <code>VADER</code> (Valence Aware Dictionary and sEntiment Reasoner) tool, which is well-suited for analyzing short texts like social media posts or online reviews.</p>
+<p>Each review was assigned a compound sentiment score ranging from –1 (most negative) to +1 (most positive). Based on standard VADER thresholds, we labeled reviews as:</p>
+<ul>
+<li><strong>Positive</strong> (compound ≥ 0.05),</li>
+<li><strong>Neutral</strong> (between –0.05 and 0.05), and</li>
+<li><strong>Negative</strong> (≤ –0.05).</li>
+</ul>
+<p>We then aggregated sentiment at the movie level, computing:</p>
+<ul>
+<li>The average compound score per movie,</li>
+<li>The share of positive/neutral/negative reviews.</li>
+</ul>
+<p>To ensure statistical robustness, we retained only movies with at least 20 matched reviews, resulting in a filtered set of approximately <strong>N = 750</strong> films.</p>
+<section id="table-3-example-of-sentiment-labeled-user-reviews" class="level4" data-number="5.3.1.1">
+<h4 data-number="5.3.1.1" class="anchored" data-anchor-id="table-3-example-of-sentiment-labeled-user-reviews"><span class="header-section-number">5.3.1.1</span> Table 3 · Example of sentiment-labeled user reviews</h4>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 19%">
+<col style="width: 53%">
+<col style="width: 17%">
+<col style="width: 10%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Movie Title</th>
+<th>Sample Review</th>
+<th>Compound Score</th>
+<th>Label</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Inception</td>
+<td>“Brilliantly complex and visually stunning!”</td>
+<td>0.85</td>
+<td>Positive</td>
+</tr>
+<tr class="even">
+<td>Suicide Squad</td>
+<td>“Weak plot, bad acting, not worth watching.”</td>
+<td>–0.62</td>
+<td>Negative</td>
+</tr>
+<tr class="odd">
+<td>Tenet</td>
+<td>“It’s confusing… but kind of cool I guess.”</td>
+<td>0.01</td>
+<td>Neutral</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="sentiment-patterns-and-correlation-with-revenue" class="level3" data-number="5.3.2">
+<h3 data-number="5.3.2" class="anchored" data-anchor-id="sentiment-patterns-and-correlation-with-revenue"><span class="header-section-number">5.3.2</span> Sentiment Patterns and Correlation with Revenue</h3>
+<p>We began our analysis by exploring overall sentiment distributions across the filtered review dataset. As expected, positive reviews dominated, with a large portion of films having an average compound score above 0.5. Neutral and negative sentiments were less common but still present in a meaningful subset.</p>
+<p>To illustrate this, we examined sentiment composition for four films:</p>
+<div id="ecc4710f" class="cell" data-execution_count="14">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>Image(<span class="st">"figures/sentiment.png"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="140">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="main-report_files/figure-html/cell-15-output-1.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 13 · Sentiment distribution across selected high-profile movies</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Figure 13 compares sentiment proportions for selected titles. Dune: Part Two and Oppenheimer exhibit overwhelming positivity, while The Marvels shows a higher share of negative sentiment, aligning with its underwhelming commercial results.</p>
+<p>To further investigate the relationship between sentiment and financial success, we computed the Pearson correlation between a film’s:</p>
+<ul>
+<li><p>Average compound sentiment score, and</p></li>
+<li><p>log-transformed box office revenue.</p></li>
+</ul>
+<p>This yielded a moderate but significant positive correlation (<em>r = 0.42</em>), suggesting that films with more positively perceived user reviews tend to perform better financially.</p>
+<p>We also generated a pairplot to inspect pairwise relationships between sentiment proportions and total revenue:</p>
+<div id="4e7cc8e3" class="cell" data-execution_count="15">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> Image</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>Image(<span class="st">"figures/scatterplot.png"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="141">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="main-report_files/figure-html/cell-16-output-1.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 15 · Pairplot of sentiment proportions vs.&nbsp;final revenue</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Figure 15 offers a compact view of the correlation landscape. Positive sentiment shows a weak upward trend with revenue; negative and neutral proportions exhibit no consistent pattern.</p>
+</section>
+<section id="sentiment-based-prediction-model" class="level3" data-number="5.3.3">
+<h3 data-number="5.3.3" class="anchored" data-anchor-id="sentiment-based-prediction-model"><span class="header-section-number">5.3.3</span> Sentiment-Based Prediction Model</h3>
+<p>To evaluate whether user sentiment can be used to predict a film’s financial success, we constructed a basic linear regression model using sentiment-derived features. Specifically, we used:</p>
+<ul>
+<li>Proportion of positive, neutral, and negative reviews<br>
+</li>
+<li>average compound sentiment score</li>
+</ul>
+<p>as predictors of log-transformed box office revenue.</p>
+<p>Despite the model’s simplicity, it achieved an <strong>R² of 0.18</strong> on the test set. While modest, this indicates that sentiment signals do contain some predictive power, even without incorporating traditional metadata like budget or cast.</p>
+<section id="table-4-regression-coefficients-for-sentiment-based-model" class="level4" data-number="5.3.3.1">
+<h4 data-number="5.3.3.1" class="anchored" data-anchor-id="table-4-regression-coefficients-for-sentiment-based-model"><span class="header-section-number">5.3.3.1</span> Table 4 · Regression coefficients for sentiment-based model</h4>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Feature</th>
+<th>Coefficient</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Positive share (%)</td>
+<td>0.54</td>
+</tr>
+<tr class="even">
+<td>Neutral share (%)</td>
+<td>–0.12</td>
+</tr>
+<tr class="odd">
+<td>Negative share (%)</td>
+<td>–0.38</td>
+</tr>
+<tr class="even">
+<td>Avg compound score</td>
+<td>0.47</td>
+</tr>
+</tbody>
+</table>
+<p>The coefficient magnitudes confirm our earlier findings: positive sentiment is associated with higher revenue, while negative sentiment has a dampening effect.</p>
+<div id="379d4893" class="cell" data-execution_count="16">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>Image(<span class="st">"figures/positive-world.png"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="142">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="main-report_files/figure-html/cell-17-output-1.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 15 · Revenue vs.&nbsp;Positive sentiment (%)</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div id="7de5b24c" class="cell" data-execution_count="17">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>Image(<span class="st">"figures/negative-world.png"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="143">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="main-report_files/figure-html/cell-18-output-1.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 16 · Revenue vs.&nbsp;Negative sentiment (%)</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div id="ffb73891" class="cell" data-execution_count="18">
+<details class="code-fold">
+<summary>Show code</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>Image(<span class="st">"figures/neutral-world.png"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="144">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="main-report_files/figure-html/cell-19-output-1.png" class="img-fluid figure-img"></p>
+<figcaption>Figure 17 · Revenue vs.&nbsp;Neutral sentiment (%)</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+</section>
+<section id="key-findings-conclusion" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Key Findings &amp; Conclusion</h1>
+<p>In this study, we set out to explore the factors affecting movie revenues using a combination of metadata and sentiment analysis. By addressing three interrelated research questions, we identified both expected and novel patterns in the financial performance of movies.</p>
+<p>First, regression analysis revealed that budget and popularity metrics on IMDb (votes and ratings) are the strongest predictors of revenue. Notably, films with larger budgets and higher audience engagement tended to earn significantly more, while screen time and genre had relatively weak effects.</p>
+<p>Second, attempts to categorize revenue categories based on pre-release performance showed that while some genre or decade patterns existed, the patterns struggled to distinguish clear boundaries. Even when advanced methods such as <strong>XGBoost</strong> were used, classification performance remained limited, suggesting that financial performance is not solely determined by static characteristics.</p>
+<p>Finally, our sentiment-based analysis showed a moderate positive correlation (<strong>r = 0.42</strong>) between average user sentiment and box office success. The regression results confirmed that a large proportion of positive sentiment contributes positively to revenue prediction even in the absence of traditional metadata. This emphasizes the value of public perception and online reviews as an additional data source for box office prediction.</p>
+<p>Overall, our results suggest that box office revenues are influenced by a complex interplay of budgetary, reputational, and perceptual factors. While no single characterization guarantees success, combining structured metadata with viewer sentiment provides a more holistic understanding of box office dynamics.</p>
+</section>
+<section id="limitations-and-outlook" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> Limitations and Outlook</h1>
+<p>Although the project’s conclusions provide insightful information on the elements that influence movie industry revenue, a number of limitations must be noted.</p>
+<p>Initially there were missing or inconsistent entries in the dataset, despite its size, especially for financial variables like budget and box office revenue. Selection bias may have been introduced, and the effective sample size for modeling was probably decreased. Similarly, the complexity of some analyses was limited by the simplification of category variables like director and genre.</p>
+<p>Furthermore, the sentiment analysis used lexicon-based methods (<code>VADER</code>), which may have trouble with sarcasm, context dependence, or domain-specific terminology, while being quick and easy to understand. We did not differentiate between reviews from critics and audience members, nor did we separate pre- and post-release opinions; instead, we aggregated reviews at the movie level. Lastly, linear or tree-based structures were the main emphasis of our models. They might not capture intricate, non-linear interactions between features, even while they are sufficient for interpretability. Furthermore, more advanced ensemble techniques, temporal analysis, or outside factors like marketing budgets, social media buzz, or competition at release time could all help our classification and regression tasks.</p>
+<p>Future work could potentially increase prediction power by utilizing transformer-based sentiment models (like <code>BERT</code>), adding network-based variables like actor cooperation or production company influence, or recording time-evolving sentiment from many platforms. Richer revenue determinants may also be found by more detailed modeling of media coverage, audience demographics, and release scheduling.</p>
 </section>
 
 </main>
