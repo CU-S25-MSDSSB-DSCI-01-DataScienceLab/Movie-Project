@@ -12,6 +12,7 @@ We investigate:
 
 Our analysis combines traditional features (like budget and ratings) with natural language processing on real user reviews.
 
+
 ---
 
 ## Team Members
@@ -32,6 +33,10 @@ We provide **four formats** of the final report so you can choose the one that w
 |    Web HTML | `main-report.html`           | Open in any web browser (e.g. Chrome, Edge, Firefox)  |
 |    Notebook | `main-report.ipynb`          | Open in Jupyter or VS Code with Python/Jupyter setup  |
 |    Quarto   | `main-report.qmd`            | For reproducibility and editing in [Quarto](https://quarto.org) |
+This project involved multiple stages — data collection, wrangling, exploration, modeling, and sentiment analysis — each of which was implemented in its own dedicated Jupyter notebook.
+
+To keep the final report concise and readable, we only included the most important results and plots in the main .ipynb and .qmd report. However, all original development notebooks are available in the jupyter notebooks/ folder for those interested in the full workflow and implementation details. These notebooks showcase our code-heavy process and serve as a complete audit trail for reproducibility and evaluation.
+
 
 >  We recommend using the **PDF or HTML version** for easy reading.  
 >  If you're a technical reviewer, the `.ipynb` or `.qmd` formats offer full code and interactivity.
