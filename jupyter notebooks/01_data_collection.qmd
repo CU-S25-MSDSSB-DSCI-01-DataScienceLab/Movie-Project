@@ -1,0 +1,414 @@
+---
+title: Data Collection & Wrangling
+jupyter: python3
+---
+
+
+
+**Goal:** Build a stratified 5000 movie list, fetch OMDb movies metadata, fill missing BoxOffice and output clean dataframe.
+
+
+
+
+## 1. Setup
+
+```{python}
+import os
+import json
+import pandas as pd
+import math
+import re
+import warnings
+from pathlib import Path
+
+# ignores annoying warnings
+warnings.filterwarnings(
+    "ignore",
+    message=".*apply operated on the grouping columns.*",
+    category=DeprecationWarning
+)
+
+base_dir = os.getcwd()
+# obdb paths
+json_path = os.path.join(base_dir, "..", "data_collection", "omdb_data.json")
+csv_output_path = os.path.join(base_dir, "..", "data_collection", "omdb_cleaned.csv")
+# kaggle metadata path
+metadata_path = os.path.join(base_dir, "..", "data_collection", "Kaggle The Movies Dataset", "movies_metadata.csv")
+# master movie list parth
+movie_list_path = os.path.join(base_dir, "..", "data_collection", "movie_list.txt")
+```
+
+## 2. Building Master Movie List
+
+description of this section, our idea and an advantage of this approach
+
+### 2.1 Load and preprocess medadata
+
+what we do
+
+```{python}
+df = pd.read_csv(metadata_path, low_memory=False)
+
+df = df.dropna(subset=["budget", "release_date"])
+df["budget"] = pd.to_numeric(df["budget"], errors="coerce")
+df["year"]   = pd.to_datetime(df["release_date"], errors="coerce").dt.year
+df = df[df["year"].between(1974, 2024)]  # 50 years span
+```
+
+### 2.2 Define budget tiers and draw sample
+
+why we make tiers
+
+
+```{python}
+df["decade"]  = (df["year"] // 10) * 10
+df["budget_m"] = df["budget"] / 1000000
+
+budget_bins  = [0, 5, 20, 100, df["budget_m"].max()+1]
+budget_labels= ["<5M", "5–20M", "20–100M", ">100M"]
+df["budget_tier"] = pd.cut(df["budget_m"], bins=budget_bins, labels=budget_labels)
+
+n_decades = df["decade"].nunique()
+n_tiers   = df["budget_tier"].nunique()
+total_cells = n_decades * n_tiers
+
+N_PER_CELL = math.ceil(5000 / total_cells)
+print(f"{n_decades=} × {n_tiers=} = {total_cells} cells")
+print(f"If we want to reach ~5000 movies, then N_PER_CELL = {N_PER_CELL}")
+```
+
+what is stratified sampling
+
+how this is gonna help us?
+
+```{python}
+sampled = (
+    df
+    .groupby(["decade", "budget_tier"], observed=True, group_keys=False)
+    .apply(
+        lambda grp: grp.sample(min(len(grp), N_PER_CELL), random_state=42),
+        include_groups=True)
+)
+print(f"Total sampled: {len(sampled)}")
+print(f"Sampled {len(sampled)} movies across "
+      f"{sampled['decade'].nunique()} decades × "
+      f"{sampled['budget_tier'].nunique()} budget tiers")
+```
+
+we end up with 2971 movies but we want more!
+
+so now we are going to randomly choose the rest from the original Kaggle dataset to reach 5k
+
+```{python}
+target = 5000
+current = len(sampled)
+if current < target:
+    residual = target - current
+    remaining = df.loc[~df.index.isin(sampled.index)] # all except already chosen
+    extra = remaining.sample(residual, random_state=42)    # randomly xhoosing
+    sampled = pd.concat([sampled, extra]) #merge
+print(f"Final stratified + random sample: {len(sampled)} movies")
+```
+
+### 2.3 Final master movie list
+done
+
+```{python}
+sampled["title"].to_csv(movie_list_path, index=False, header=False)
+print(f"Master list of {len(sampled)} titles is saved to {movie_list_path}")
+```
+
+## 3. OMDb Data Fetching
+
+
+Refer to `omdb_fetch.py` script
+
+```{python}
+# python omdb_fetch.py
+```
+
+## 4. Inspect Raw JSON
+
+text
+
+json to dataframe
+
+```{python}
+# into dataframe
+
+with open(json_path, "r", encoding="utf-8") as f:
+    data = json.load(f)
+
+df = pd.DataFrame(data)
+df.head(5)
+```
+
+## 5. Data Cleaning
+
+text
+
+### 5.1 Selecting relevant columns
+
+```{python}
+columns_to_keep = [
+    "Title", "imdbID", "Year", "Genre", "Director", "Actors", "Language",
+    "Country", "Runtime", "BoxOffice", "imdbRating", "imdbVotes", "Awards", "Type"
+]
+
+df = df[columns_to_keep]
+df.head(3)
+```
+
+### 5.2 Cleaning numeric fields + budget columb
+
+```{python}
+#BoxOffice to integer
+df["BoxOffice"] = df["BoxOffice"].replace("N/A", pd.NA)
+df["BoxOffice"] = df["BoxOffice"].dropna().apply(
+    lambda x: int(re.sub(r"[\$,]", "", x)) if isinstance(x, str) else pd.NA
+)
+
+#imdbRating to float
+df["imdbRating"] = pd.to_numeric(df["imdbRating"], errors="coerce")
+
+#imdbVotes to integer
+df["imdbVotes"] = df["imdbVotes"].replace("N/A", pd.NA)
+df["imdbVotes"] = df["imdbVotes"].dropna().apply(
+    lambda x: int(x.replace(",", "")) if isinstance(x, str) else pd.NA
+)
+
+# here we wanna merge budget from the original Kaggle metadata
+meta_budget = pd.read_csv(
+    metadata_path,
+    usecols=["imdb_id", "budget"],
+    low_memory=False
+)
+meta_budget["budget"] = pd.to_numeric(meta_budget["budget"], errors="coerce")
+meta_budget = meta_budget.rename(columns={"imdb_id": "imdbID"})
+
+# we do the left-join
+df = df.merge(
+    meta_budget[["imdbID", "budget"]],
+    on="imdbID",
+    how="left"
+)
+
+# saving cleaned data to csv
+df.to_csv(csv_output_path, index=False)
+```
+
+### 5.3 Removing duplicates
+
+```{python}
+before = len(df)
+df = df.drop_duplicates(subset=["imdbID"], keep="first").reset_index(drop=True)
+after = len(df)
+print(f"Dropped {before - after} duplicate records; {after} unique movies remain.")
+```
+
+### 5.4 Zeros to NaN in BoxOffice
+
+```{python}
+df["BoxOffice_was_missing"] = (df["BoxOffice"] == 0)
+
+df.loc[df["BoxOffice"] == 0, "BoxOffice"] = pd.NA
+
+zero_count = df["BoxOffice_was_missing"].sum()
+nan_count  = df["BoxOffice"].isna().sum()
+```
+
+## 6. Box Office Missing Values
+
+After cleaning, we check how many movies do not contain valid box office revenue data.
+
+```{python}
+boxoffice_miss = df[df["BoxOffice"].isna()]
+print(f"{len(boxoffice_miss)} out of {len(df)} movies are missing BoxOffice data.")
+```
+
+### 6.1 Merging IMDb and TMDb IDs
+
+1 load raw json and locate imdbID
+
+2 join with links.csv from Kaggle to get tmdb 
+
+
+
+TMDB
+API KEY - 1d779d5d4246f2809fc00d7729449f09
+API Read Access Token - eyJhbGciOiJIUzI1NiJ9
+
+
+```{python}
+# I load json as dataframe
+with open(json_path, "r", encoding="utf-8") as f:
+    omdb_raw = json.load(f)
+omdb_raw_df = pd.DataFrame(omdb_raw)
+
+# links.csv dataframe from Kaggle(imdbId keyword)
+links_path = os.path.join(base_dir, "..", "data_collection", "Kaggle The Movies Dataset", "links.csv")
+links_df = pd.read_csv(links_path, usecols=["imdbId", "tmdbId"])
+
+missing = df[df["BoxOffice"].isna()].copy() # titles still missing Boxofice
+
+# taking out numbers from imdbID field tt0123456 to 123456
+missing["imdbId_numeric"] = (missing["imdbID"]
+    .str.replace("^tt", "", regex=True)
+    .astype("Int64")
+)
+
+missing = missing.merge( # and now merge on that numeric field
+    links_df, left_on="imdbId_numeric", right_on="imdbId", how="left")
+```
+
+### 6.2 Save enhanced missing list
+
+a
+
+```{python}
+enhanced_cols = ["Title","imdbID","tmdbId"]
+enhanced_path = os.path.join(
+    base_dir, "..", "data_collection", "missing_boxoffice_enhanced.csv"
+)
+missing[enhanced_cols].to_csv(enhanced_path, index=False)
+print(f"Enhanced missing list ({len(missing)}) was saved to {enhanced_path}")
+```
+
+### 6.3 TMDb API call
+
+There we call TMDb to fill in `revenue` where boxoffice is EMPTY
+
+refer to `tmdb_fetch.py` script to replicate
+
+1657 out of 1919 missing revenue movies have been successfully fetched!
+
+```{python}
+# python tmdb_fetch.py
+```
+
+### 6.4 Merging TMDb revenues with `df`
+
+
+text
+
+```{python}
+tmdb_rev = pd.read_csv(
+    os.path.join(base_dir, "..", "data_collection", "tmdb_revenues.csv")
+)
+
+#merging into df by title
+df = df.merge(tmdb_rev[["Title","BoxOffice"]],
+    on="Title", how="left", suffixes=("", "_tmdb")
+)
+
+#wherever BoxOffice is null = fill from the tmdb column
+df["BoxOffice"] = df["BoxOffice"].fillna(df["BoxOffice_tmdb"])
+df = df.drop(columns=["BoxOffice_tmdb"])
+
+still_missing = df["BoxOffice"].isna().sum()
+total_movies  = len(df)
+print(f"{still_missing} out of {total_movies} movies still have no BoxOffice after TMDb API calling.")
+```
+
+### 6.5 Building the scraper list
+
+here we are going to find still missing revenue 262 movies
+
+THose 262 titles fall into 2 possible categories:
+
+- no tmdb ID at all (hence we couldn't call TMDb API)
+- title has tmdb id but API returned zero because it may not track this title
+
+That being said, we will use "The-Numbers" in order to scrape them again!
+
+```{python}
+#still missing titles
+still_missing_titles = df[df["BoxOffice"].isna()]["Title"]
+
+# filtering missing titles DataFrame (the one with tmdbId) by those titles
+fallback = missing[missing["Title"].isin(still_missing_titles)][
+    ["Title","imdbID","tmdbId"]
+]
+
+fallback_path = os.path.join(
+    base_dir, "..", "data_collection", "fallback_boxoffice.csv"
+)
+fallback.to_csv(fallback_path, index=False)
+
+print(f"{len(fallback)} titles to scrape are saved to {fallback_path}")
+```
+
+### 6.6 Scraping on The-Numbers
+
+To replicate, refer to `thenumbers_fetch.py`
+
+```{python}
+# python thenumbers_fetch.py
+```
+
+Unfortunately, all of 262 titles couldn't get the box office information. In such case we replace their values onto NaN and keep them for further exploratory work.
+
+### 6.7 "Zeros" to NaN in boxoffice
+
+```{python}
+df["BoxOffice_was_missing"] = (df["BoxOffice"] == 0)
+
+# zeros to NaN
+df.loc[df["BoxOffice"] == 0, "BoxOffice"] = pd.NA
+
+zero_count = (df["BoxOffice_was_missing"]).sum()
+nan_count  = df["BoxOffice"].isna().sum()
+print(f"{zero_count} movies had zero BoxOffice and are now NaN (total NaNs: {nan_count})")
+```
+
+## 7. Final Data Overview
+
+- missing BoxOffice values are converted to NaN
+- Key numeric summaries (e.g. ratings, votes..)
+- ...
+
+```{python}
+zero_count     = (df["BoxOffice"] == 0).sum()
+na_count       = df["BoxOffice"].isna().sum()
+positive_count = (df["BoxOffice"] > 0).sum()
+total          = len(df)
+
+print(f"BoxOffice == 0:    {zero_count} movies")
+print(f"BoxOffice is NaN:  {na_count} movies")
+print(f"BoxOffice > 0:     {positive_count} movies")
+print(f"Total checked:     {total} movies")
+```
+
+```{python}
+summary = df[["BoxOffice", "imdbRating", "imdbVotes", "Runtime"]].describe().T
+
+numeric_cols = summary.index.tolist()
+missing_counts = df[numeric_cols].isna().sum()
+summary["missing"] = missing_counts
+
+display(summary)
+```
+
+```{python}
+print("Top 5 movies by BoxOffice:")
+display(df.nlargest(5, "BoxOffice")[["Title","Year","BoxOffice"]])
+
+print("\n5 lowest movies by BoxOffice:")
+display(df.nsmallest(500, "BoxOffice")[["Title","Year","BoxOffice"]])
+```
+
+```{python}
+df["Genre_list"] = df["Genre"].str.split(", ")
+
+top_genres = (
+    df.explode("Genre_list")["Genre_list"]
+      .value_counts()
+      .head(10)
+)
+print("Table of Frequencies: top 10 genres")
+display(top_genres)
+
+print("\nTable of Frequencies: top 10 directors by № of movies")
+display(df["Director"].value_counts().head(10))
+```
+

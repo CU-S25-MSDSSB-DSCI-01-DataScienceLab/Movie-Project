@@ -1,11 +1,18 @@
 import pandas as pd
 import json
+from pathlib import Path
 
 # Define file paths within the Sentiment_analysis directory
-tmdb_data_path = "tmdb_movie_data.csv"
-omdb_data_path = "movie_data.csv" # This is the OMDb data from the previous run
-box_office_mojo_path = "box_office_data.csv"
-output_merged_path = "merged_movie_data.csv"
+DATA_DIR = Path.cwd().parent / "Sentiment_analysis_2"
+
+tmdb_data_path       = DATA_DIR / "tmdb_movie_data.csv"
+omdb_data_path       = DATA_DIR / "movie_data.csv"
+box_office_mojo_path = DATA_DIR / "box_office_data.csv"
+output_merged_path   = DATA_DIR / "merged_movie_data.csv"
+
+df_tmdb            = pd.read_csv(tmdb_data_path)
+df_omdb            = pd.read_csv(omdb_data_path)
+df_box_office_mojo = pd.read_csv(box_office_mojo_path)
 
 # Load datasets
 df_tmdb = pd.read_csv(tmdb_data_path)

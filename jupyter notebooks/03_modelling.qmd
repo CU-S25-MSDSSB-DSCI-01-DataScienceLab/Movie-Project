@@ -1,0 +1,188 @@
+---
+title: What factors have the most significant impact on movie revenue?
+jupyter: python3
+---
+
+
+
+
+
+## 0. Setup
+
+```{python}
+from pathlib import Path
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.preprocessing import MultiLabelBinarizer, StandardScaler
+from sklearn.pipeline import make_pipeline
+from sklearn.linear_model import LinearRegression
+import scipy.stats as stats
+
+
+notebook_dir = Path().resolve()
+project_root  = notebook_dir.parent
+data_path     = project_root / "data_collection" / "omdb_cleaned.csv"
+
+df = pd.read_csv(data_path)
+```
+
+## 1. What factors have the most significant impact on movie revenue?
+
+In this section we filtered out non-4-digit years to remove series because they last for several years (e.g. 2012-2016)
+
+We also pasrsed `Runtime` and then added `log_budget` and `log_imdbVotes` alongside `imdbRating`, `Runtime` and `Year` to our feature set and computed their Pearson correlations with **log_BoxOffice**. 
+
+We use log1p on `revenue`, `budget`, and votes to tame extreme outliers, stabilize variance, and linearize these power‐law relationships so our correlation (and subsequent regression) estimates are more reliable.
+
+```{python}
+#removing tv-series from the dataset
+#because they have interval years like 2010-2015
+mask_bad_year = ~df['Year'].astype(str).str.match(r'^\d{4}$', na=False)
+df = df.loc[~mask_bad_year].copy()
+df['Year'] = df['Year'].astype(int)
+
+df['Runtime'] = pd.to_numeric(
+    df['Runtime'].astype(str).str.extract(r'(\d+)', expand=False),
+    errors='coerce'
+)
+
+# ensure budget is numeric and log-transform skewed numerics
+df = df[df['budget'] > 0].copy()
+df['budget'] = pd.to_numeric(df['budget'], errors='coerce')
+df['log_budget'] = np.log1p(df['budget'])
+df['log_imdbVotes'] = np.log1p(df['imdbVotes'])
+df['log_BoxOffice'] = np.log1p(df['BoxOffice'])
+
+numeric_feats = ['Year', 'Runtime', 'imdbRating', 'log_imdbVotes', 'log_budget']
+target = 'log_BoxOffice'
+model_df = df[numeric_feats + [target]].dropna()
+
+corrs = model_df.corr()[target].drop(target).sort_values(ascending=False)
+print(corrs)
+```
+
+```{python}
+for feat in numeric_feats:
+    plt.figure()
+    plt.scatter(model_df[feat], model_df[target], alpha=0.4)
+    plt.xlabel(feat)
+    plt.ylabel(target)
+    plt.show()
+```
+
+- `log_imdbVotes` vs `log_BoxOffice`
+A very concentrated and almost linear upward with more IMDb votes almost always earn disproportionately higher box-office. This is our single strongest driver.
+
+- `log_budget` vs `log_BoxOffice`
+A clear positive trend: bigger production budgets generally translate into higher revenues
+
+- `imdbRating` vs `log_BoxOffice`
+Almost no patterns
+
+- `Runtime ` vs `log_BoxOffice`
+A slight upward slope—longer films earn a bit more but only with a minor effect
+
+```{python}
+project_root = Path().resolve().parent
+df = pd.read_csv(project_root / "data_collection" / "omdb_cleaned.csv")
+
+mask = ~df['Year'].astype(str).str.match(r'^\d{4}$', na=False)
+df = df.loc[~mask].copy()
+df['Year'] = df['Year'].astype(int)
+df['Runtime'] = pd.to_numeric(
+    df['Runtime'].astype(str).str.extract(r'(\d+)', expand=False),
+    errors='coerce'
+)
+
+df['budget'] = pd.to_numeric(df['budget'], errors='coerce')
+df = df[df['budget'] > 0].copy()
+df['log_budget'] = np.log1p(df['budget'])
+
+df['log_BoxOffice']   = np.log1p(df['BoxOffice'])
+df['log_imdbVotes']   = np.log1p(df['imdbVotes'])
+
+#top 10 genres
+genres = df['Genre'].apply(lambda x: x.split('|') if isinstance(x, str) else [])
+mlb    = MultiLabelBinarizer()
+ohe    = pd.DataFrame(mlb.fit_transform(genres),
+                      columns=mlb.classes_,
+                      index=df.index)
+top10  = ohe.sum().nlargest(10).index
+df[top10] = ohe[top10]
+
+feature_cols = ['log_imdbVotes', 'imdbRating', 'Runtime', 'Year', 'log_budget'] + top10.tolist()
+X = df[feature_cols]
+y = df['log_BoxOffice']
+mask2 = X.notna().all(axis=1) & y.notna()
+X, y = X.loc[mask2], y.loc[mask2]
+
+# ols regression
+pipeline = make_pipeline(
+    StandardScaler(),
+    LinearRegression()
+)
+pipeline.fit(X, y)
+
+#coeffs + r^2
+coefs = pipeline.named_steps['linearregression'].coef_
+coef_series = pd.Series(coefs, index=X.columns).sort_values(key=abs, ascending=False)
+print("Standardized coefficients:\n", coef_series)
+print("\nR²:", pipeline.score(X, y))
+```
+
+## Insights from the Linear Regression
+
+**Overall Fit** R²0.61. These independent variables explain 61% of the variance in log-BoxOffice.
+
+`log_imdbVotes` has the largest standardized coefficient (1.807) confirming that audience engagement is the strongest driver of revenue
+
+Budget matters too: `log_budget` comes in as the second most important positive predictor (0.454), indicating that bigger production spends translate into higher box-office, but with the  less intensity than votes.
+
+`imdbRating` ≈ –0.53 and `Year` ≈ –0.62
+
+
+## Model Diagnostics
+
+```{python}
+y_pred = pipeline.predict(X)
+residuals = y - y_pred
+
+plt.figure()
+plt.scatter(y_pred, residuals, alpha=0.4)
+plt.hlines(0, y_pred.min(), y_pred.max(), linestyles='dashed')
+plt.xlabel('Fitted values')
+plt.ylabel('Residuals')
+plt.title('Residuals vs Fitted')
+plt.show()
+```
+
+The points on the scatter plot are spreaded evenly above and below zero which is good. It indicates that we are not missing any non-linear trend.
+
+```{python}
+plt.figure()
+stats.probplot(residuals, dist="norm", plot=plt)
+plt.title('QQ-plot of Residuals')
+plt.show()
+```
+
+- Most of the residuals lie close to the 45 degrees line, meaning that the errors are approximately *normally distributed* in the center.
+
+- Nevertheless, it can be noticed that the on left tail the dots bend away, indicating a few outliers where the model over- or under-predicts log-revenue more than a perfect normal would. 
+
+```{python}
+# Variance Inflation Factors
+vif_data = pd.DataFrame({'feature': X.columns})
+vifs = []
+for col in X.columns:
+    X_other = X.drop(columns=col)
+    r2 = LinearRegression().fit(X_other, X[col]).score(X_other, X[col])
+    vifs.append(1.0 / (1.0 - r2))
+vif_data['VIF'] = vifs
+print(vif_data)
+```
+
+All VIFs are well below 5 (and most are ≈1–2), which tells us our predictors aren’t highly correlated with each other.
+
+## 
+
