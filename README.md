@@ -34,7 +34,7 @@ We provide **four formats** of the final report so you can choose the one that w
 |    Quarto   | `main-report.qmd`            | For reproducibility and editing in [Quarto](https://quarto.org) |
 
 >  We recommend using the **PDF or HTML version** for easy reading.  
-> 🧑‍💻 If you're a technical reviewer, the `.ipynb` or `.qmd` formats offer full code and interactivity.
+>  If you're a technical reviewer, the `.ipynb` or `.qmd` formats offer full code and interactivity.
 
 ---
 
