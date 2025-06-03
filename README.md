@@ -1,28 +1,46 @@
-# Movie Box Office (revenue) Prediction
+# 🎬 Movie Box Office Prediction
 
-*(For the final version remove this text and write a short descriptive text about the project. A full abstract/executive summary should be the beginning of your project report: qmd -> html.)*
+Welcome to our project on predicting movie box office performance. This work was completed as part of the **Data Science Lab** course and explores what drives a film’s financial success — from production metadata to audience sentiment in reviews.
 
-Next steps:
+## 📌 What This Project Is About
 
-- Edit the [Workplan](WORKPLAN.md)
-- Edit the [Timeline and Tasks](TIMELINE_TASKS.md)
+We investigate:
 
-## 📂 Table of Contents
+1. **Which factors most influence movie revenue** (e.g. budget, genre, IMDb stats)  
+2. **Whether revenue can be predicted using metadata available before release**  
+3. **How audience sentiment (from reviews) affects box office outcomes**
 
-- [Installation](#installation)
-- [Usage](#usage)
-- [Project Structure](#project-structure)
-- [Data](#data)
-- [Modeling Approach](#modeling-approach)
-- [Contributing](#contributing)
-- [License](#license)
-- [Acknowledgments](#acknowledgments)
+Our analysis combines traditional features (like budget and ratings) with natural language processing on real user reviews.
 
 ---
 
-## ⚙️ Installation
+## Team Members
 
+- Matvei Trifanov  
+- Pasindu Perera  
+- Lu Zerong
 
+---
 
+## How to Read the Report
 
+We provide **four formats** of the final report so you can choose the one that works best for you:
 
+| Format      | File                         | How to Open                                           |
+|-------------|------------------------------|--------------------------------------------------------|
+|    PDF      | `main-report.pdf`            | Open directly in any PDF reader                       |
+|    Web HTML | `main-report.html`           | Open in any web browser (e.g. Chrome, Edge, Firefox)  |
+|    Notebook | `main-report.ipynb`          | Open in Jupyter or VS Code with Python/Jupyter setup  |
+|    Quarto   | `main-report.qmd`            | For reproducibility and editing in [Quarto](https://quarto.org) |
+
+> ✅ We recommend using the **PDF or HTML version** for easy reading.  
+> 🧑‍💻 If you're a technical reviewer, the `.ipynb` or `.qmd` formats offer full code and interactivity.
+
+---
+
+## How to Access
+
+1. **Clone or download** this repository:
+   ```bash
+   git clone https://github.com/[your-username]/[repo-name].git
+   ```
