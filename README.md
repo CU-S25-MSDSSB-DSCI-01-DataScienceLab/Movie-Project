@@ -33,7 +33,7 @@ We provide **four formats** of the final report so you can choose the one that w
 |    Notebook | `main-report.ipynb`          | Open in Jupyter or VS Code with Python/Jupyter setup  |
 |    Quarto   | `main-report.qmd`            | For reproducibility and editing in [Quarto](https://quarto.org) |
 
-> ✅ We recommend using the **PDF or HTML version** for easy reading.  
+>  We recommend using the **PDF or HTML version** for easy reading.  
 > 🧑‍💻 If you're a technical reviewer, the `.ipynb` or `.qmd` formats offer full code and interactivity.
 
 ---
