@@ -36,6 +36,7 @@ We provide **four formats** of the final report so you can choose the one that w
 
 >  We recommend using the **PDF or HTML version** for easy reading.  
 >  If you're a technical reviewer, the `.ipynb` or `.qmd` formats offer full code and interactivity.
+
 This project involved multiple stages — data collection, wrangling, exploration, modeling, and sentiment analysis — each of which was implemented in its own dedicated Jupyter notebook.
 
 To keep the final report concise and readable, we only included the most important results and plots in the main .ipynb and .qmd report. However, all original development notebooks are available in the jupyter notebooks/ folder for those interested in the full workflow and implementation details. These notebooks showcase our code-heavy process and serve as a complete audit trail for reproducibility and evaluation.
