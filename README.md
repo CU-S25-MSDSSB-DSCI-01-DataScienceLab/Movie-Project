@@ -47,5 +47,5 @@ To keep the final report concise and readable, we only included the most importa
 
 1. **Clone or download** this repository:
    ```bash
-   git clone https://github.com/[your-username]/[repo-name].git
+   git clone https://github.com/CU-S25-MSDSSB-DSCI-01-DataScienceLab/Movie-Project.git
    ```
